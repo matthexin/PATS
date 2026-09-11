@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PAT's</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		body {
+			background: #0e0e10;
+			color: #d8d8dc;
+			font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+			font-weight: 400;
+			line-height: 1.5;
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+
+		/* ВЕРХНЯЯ ПАНЕЛЬ — БОЛЬШАЯ */
+		.topbar {
+			background: #141416;
+			border-bottom: 1px solid #202024;
+			padding: 5rem 2rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 30vh;
+		}
+
+		.topbar-title {
+			font-size: clamp(4rem, 10vw, 12rem);
+			font-weight: 500;
+			letter-spacing: 0.2em;
+			line-height: 0.9;
+			text-align: center;
+			font-style: italic;
+			background: linear-gradient(180deg, #f5f5f7 0%, #8a8a94 100%);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			transform: skewX(-5deg);
+		}
+
+		/* ОСНОВНОЙ КОНТЕНТ */
+		main {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 5rem 2rem;
+			gap: 5rem;
+			max-width: 1100px;
+			width: 100%;
+			margin: 0 auto;
+		}
+
+		.desc-label {
+			font-size: 1.5rem;
+			letter-spacing: 0.18em;
+			text-transform: uppercase;
+			color: #7a7a86;
+			line-height: 1.6;
+			font-weight: 500;
+		}
+
+		/* УЧАСТНИКИ */
+		.members {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 3rem;
+			width: 100%;
+		}
+
+		.member-card {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			padding: 2.5rem 2rem;
+			background: #121214;
+			border: 1px solid #202024;
+			border-radius: 3px;
+		}
+
+		.member-header {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.5rem;
+			padding-bottom: 1.5rem;
+			border-bottom: 1px solid #1e1e22;
+		}
+
+		.nickname {
+			font-size: clamp(1.8rem, 4vw, 2.4rem);
+			font-weight: 500;
+			letter-spacing: -0.01em;
+			color: #f2f2f5;
+		}
+
+		.symbol {
+			font-size: 1.25rem;
+			font-weight: 300;
+			color: #75757f;
+			font-family: monospace;
+			letter-spacing: 0.1em;
+		}
+
+		/* ОПИСАНИЕ ВНУТРИ КАРТОЧКИ */
+		.member-description {
+			display: flex;
+			flex-direction: column;
+			gap: 0.8rem;
+		}
+
+		.member-desc-label {
+			font-size: 0.8rem;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+			color: #63636d;
+			font-weight: 500;
+		}
+
+		/* КОНТАКТЫ */
+		.member-contacts {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			padding-top: 1.5rem;
+			border-top: 1px solid #1e1e22;
+		}
+
+		.contacts-label {
+			font-size: 0.8rem;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+			color: #63636d;
+			font-weight: 500;
+		}
+
+		.contacts-list {
+			display: flex;
+			flex-direction: column;
+			gap: 0.6rem;
+		}
+
+		.contact-link {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0.65rem 1rem;
+			background: #17171a;
+			border: 1px solid #222228;
+			border-radius: 2px;
+			text-decoration: none;
+			color: #c6c6ce;
+			font-size: 0.95rem;
+			letter-spacing: 0.02em;
+			transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+		}
+
+		.contact-link:hover {
+			background: #1e1e22;
+			color: #ffffff;
+			border-color: #2e2e36;
+		}
+
+		.contact-link .contact-value {
+			color: #75757f;
+			font-size: 0.85rem;
+		}
+
+		/* ОПИСАНИЕ СНИЗУ */
+		.description-bottom {
+			width: 100%;
+			max-width: 720px;
+			display: flex;
+			flex-direction: column;
+			gap: 1.2rem;
+			padding-top: 3rem;
+			border-top: 1px solid #1a1a1e;
+			text-align: center;
+		}
+
+		/* ТЕКСТ ПОД НАЗВАНИЕМ */
+		.tagline {
+			width: 100%;
+			max-width: 1000px;
+			display: flex;
+			flex-direction: column;
+			gap: 0.8rem;
+			text-align: center;
+		}
+
+		.tagline p {
+			font-size: 1.1rem;
+			letter-spacing: 0.16em;
+			line-height: 1.7;
+			font-weight: 300;
+			text-transform: uppercase;
+			color: #7a7a86;
+		}
+
+		@media (max-width: 720px) {
+			.topbar {
+				padding: 3.5rem 1.2rem;
+				min-height: 35vh;
+			}
+
+			main {
+				padding: 3rem 1.2rem;
+				gap: 3rem;
+			}
+
+			.members {
+				grid-template-columns: 1fr;
+				gap: 2rem;
+			}
+
+			.member-card {
+				padding: 2rem 1.5rem;
+			}
+
+			.desc-label {
+				font-size: 0.8rem;
+			}
+
+			.tagline p {
+				font-size: 0.8rem;
+			}
+
+			.nickname {
+				font-size: 2rem;
+			}
+
+			.contact-link {
+				font-size: 0.9rem;
+				padding: 0.6rem 0.85rem;
+			}
+
+			.contact-link .contact-value {
+				font-size: 0.8rem;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<header class="topbar">
+		<span class="topbar-title">PAT's</span>
+	</header>
+
+	<main>
+
+		<section class="tagline">
+			<p>!! дуэт двух разработчиков !!</p>
+		</section>
+
+		<section class="members">
+
+			<article class="member-card">
+				<header class="member-header">
+					<span class="nickname">matthexin</span>
+					<span class="symbol">>-&lt;</span>
+				</header>
+
+				<div class="member-description">
+					<span class="member-desc-label">C++,C#,Python разработчик.
+						отдал приоритет C++ .делаю игры, пишу музыку, творю код. считаю игры творчеством что оставит след после смерти в этом бренном мире. живу в уфе сабайтесь на тгк</span>
+					<div class="member-desc-line"></div>
+					<div class="member-desc-line medium"></div>
+					<div class="member-desc-line short"></div>
+				</div>
+
+				<div class="member-contacts">
+					<span class="contacts-label">контакты</span>
+					<div class="contacts-list">
+						<a href="https://t.me/matthexin" class="contact-link">
+							<span>telegram</span>
+							<span class="contact-value">https://t.me/matthexin</span>
+						</a>
+						<a href="https://github.com/matthexin" class="contact-link">
+							<span>github</span>
+							<span class="contact-value">https://github.com/matthexin</span>
+						</a>
+						<a href="youtube.com/@matthexin" class="contact-link">
+							<span>youtube</span>
+							<span class="contact-value">youtube.com/@matthexin</span>
+						</a>
+					</div>
+				</div>
+			</article>
+
+			<article class="member-card">
+				<header class="member-header">
+					<span class="nickname">akbarovski</span>
+					<span class="symbol">Q-Q</span>
+				</header>
+
+				<div class="member-description">
+					<span class="member-desc-label">Python разработчик.
+						3д моделер делает крутые 3д модели, отдал приоритет бэкэнду.так же рисует спрайты ,владелец стартапа криптокошелька. сабайтесь на соцсети⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+					<div class="member-desc-line"></div>
+					<div class="member-desc-line medium"></div>
+					<div class="member-desc-line short"></div>
+				</div>
+
+				<div class="member-contacts">
+					<span class="contacts-label">контакты</span>
+					<div class="contacts-list">
+						<a href="https://t.me/akbarovski_club" class="contact-link">
+							<span>telegram</span>
+							<span class="contact-value">https://t.me/akbarovski_club</span>
+						</a>
+						<a href="https://github.com/akbarovskii" class="contact-link">
+							<span>github</span>
+							<span class="contact-value">https://github.com/akbarovskii</span>
+						</a>
+						<a href="youtube.com/@akbarovski" class="contact-link">
+							<span>youtube</span>
+							<span class="contact-value">youtube.com/@akbarovski</span>
+						</a>
+					</div>
+				</div>
+			</article>
+
+		</section>
+
+		<!-- ОПИСАНИЕ СНИЗУ -->
+		<section class="description-bottom">
+			<span class="desc-label">не знаю что ждет эту команду, но это что то великоев в мире геймдева</span>
+			<div class="desc-placeholder"></div>
+			<div class="desc-placeholder medium"></div>
+			<div class="desc-placeholder short"></div>
+		</section>
+
+	</main>
+
+</body>
+
+</html>
